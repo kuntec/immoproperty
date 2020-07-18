@@ -1,0 +1,7 @@
+.form-loder {
+    position: absolute;
+    z-index: 10;
+    right: 48%;
+    top: 33%;
+    background-color: rgba(0, 0, 0, 0);
+  }

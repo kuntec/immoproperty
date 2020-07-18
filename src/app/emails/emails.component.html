@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Property</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Font Awesome -->
+ 
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+  <!-- Navbar -->
+  
+  <!-- /.navbar -->
+
+  <!-- Main Sidebar Container -->
+  
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+              <button type="button" class="btn property-btn"  data-toggle="modal" data-target="#modal-add">Add Email</button>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Email List</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Email List</h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <table class="table table-bordered">
+                  <thead>                  
+                    <tr>
+                      <th style="width: 10px">#</th>
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th>Edit</th>
+                      <th>Delete</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let emails of EmailsList | paginate: { itemsPerPage: itemsPerPage, currentPage: p, totalItems: total} ; let i=index">
+                        <td>{{ i+1 }}</td>
+                        <td>{{ emails.name }}</td>
+                        <td>{{ emails.email }}</td>
+                      <td> <button type="button" class="btn btn-block bg-gradient-warning" data-toggle="modal" data-target="#modal-edit" (click)="goEdit(emails)">Edit</button></td>
+                      <td><button type="button" class="btn btn-block bg-gradient-danger" data-toggle="modal" data-target="#modal-default" (click)="goDelete(emails)">Delete</button> </td> 
+                      </tr>
+                   
+                  </tbody>
+                </table>
+
+
+              </div>
+              <div> <pagination-controls (pageChange)="p = $event" style="float:right"></pagination-controls></div>
+              <!-- /.card-body -->
+             
+            </div>
+          </div>
+         
+        </div>
+       
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+ <app-footer></app-footer>
+  <!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
+
+<div class="modal fade" id="modal-add">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Add Email</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          
+            <form #f="ngForm" enctype="multipart/form-data">    
+          
+                  <div class="form-group">
+                  <label>Name</label>
+                  <input type="text" class="form-control" [ngClass]="{'is-invalid': f.submitted &&  add_name.invalid }" #add_name="ngModel" placeholder="Name" (ngModel)="add_name" name="add_name" required>
+                  </div>
+            
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="text" class="form-control" [ngClass]="{'is-invalid': f.submitted &&  add_email.invalid }" #add_email="ngModel" placeholder="Email" (ngModel)="add_email" name="add_email" required>
+                   
+                  </div>
+          
+              <div class="card-footer">
+                <button type="submit" class="btn btn-primary" (click)="addEmail(f)">Submit</button>
+              </div>
+              </form>
+
+        </div>
+        <!-- <div class="modal-footer justify-content-between">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div> -->
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+
+  <div class="modal fade" id="modal-edit">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Edit Email</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            
+              <form #fe="ngForm" enctype="multipart/form-data">    
+            
+                    <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" class="form-control" [ngClass]="{'is-invalid': fe.submitted &&  edit_name.invalid }" #edit_name="ngModel" placeholder="Name" [(ngModel)]="edit_details.name" name="name" required>
+                    </div>
+              
+                  <div class="form-group">
+                      <label>Email</label>
+                      <input type="text" class="form-control" [ngClass]="{'is-invalid': fe.submitted &&  edit_email.invalid }" #edit_email="ngModel" placeholder="Email" [(ngModel)]="edit_details.email" name="email" required>
+                     
+                    </div>
+            
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-primary" (click)="editEmail()">Submit</button>
+                </div>
+                </form>
+  
+          </div>
+         
+        </div>
+      
+      </div>
+     
+    </div>
+
+  <div class="modal fade" id="modal-default">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Delete Email</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>Are You Sure Want to Delete ???</p>
+          </div>
+          <div class="modal-footer justify-content-between">
+            <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+            <button type="button" class="btn btn-primary" (click)="deleteEmail()">Yes</button>
+          </div>
+        </div>
+        <!-- /.modal-content -->
+      </div>
+      <!-- /.modal-dialog -->
+    </div>
+
+    <div class="modal fade" id="messageModel">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title"></h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p>{{ responseMessage }}</p>
+            </div>
+            <div class="modal-footer justify-content-between">
+              <button type="button"  data-dismiss="modal" class="btn btn-primary">Close</button>
+            </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+
+</body>
+</html>

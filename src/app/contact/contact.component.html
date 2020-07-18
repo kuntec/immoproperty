@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Property</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Font Awesome -->
+ 
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+  <!-- Navbar -->
+  
+  <!-- /.navbar -->
+
+  <!-- Main Sidebar Container -->
+  
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+              <!-- <button type="button" class="btn btn-block bg-gradient-success col-md-3"  data-toggle="modal" data-target="#modal-add">Add Email</button> -->
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Contact Us List</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Contact Us List</h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <table class="table table-bordered">
+                  <thead>                  
+                    <tr>
+                      <th style="width: 10px">#</th>
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th>Phone</th>
+                      <th>Message</th>
+                      <!-- <th>Edit</th> -->
+                      <th>Delete</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let contact of ContactList | paginate: { itemsPerPage: itemsPerPage, currentPage: p, totalItems: total} ; let i=index">
+                        <td>{{ i+1 }}</td>
+                        <td>{{ contact.name }}</td>
+                        <td>{{ contact.email }}</td>
+                        <td>{{ contact.phone }}</td>
+                        <td>{{ contact.message }}</td>
+                      <!-- <td> <button type="button" class="btn btn-block bg-gradient-warning" data-toggle="modal" data-target="#modal-edit" (click)="goEdit(emails)">Edit</button></td> -->
+                      <td><button type="button" class="btn property-btn" data-toggle="modal" data-target="#modal-default" (click)="goDelete(contact)">Delete</button> </td> 
+                      </tr>
+                   
+                  </tbody>
+                </table>
+
+
+              </div>
+              <div> <pagination-controls (pageChange)="p = $event" style="float:right"></pagination-controls></div>
+              <!-- /.card-body -->
+             
+            </div>
+          </div>
+         
+        </div>
+       
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+ <app-footer></app-footer>
+  <!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
+
+
+  <div class="modal fade" id="modal-default">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Delete Contact Us</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>Are You Sure Want to Delete ???</p>
+          </div>
+          <div class="modal-footer justify-content-between">
+            <button type="button" class="btn property-btn" data-dismiss="modal">No</button>
+            <button type="button" class="btn property-btn" (click)="deleteContact()">Yes</button>
+          </div>
+        </div>
+        <!-- /.modal-content -->
+      </div>
+      <!-- /.modal-dialog -->
+    </div>
+
+    <div class="modal fade" id="messageModel">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title"></h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p>{{ responseMessage }}</p>
+            </div>
+            <div class="modal-footer justify-content-between">
+              <button type="button"  data-dismiss="modal" class="btn property-btn">Close</button>
+            </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+
+</body>
+</html>

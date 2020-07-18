@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Property</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Font Awesome -->
+ 
+</head>
+<body class="hold-transition sidebar-mini">
+    <!-- <div class="form-loder" *ngIf="loading">
+        <h1><img src="assets/images/loader1.gif" /></h1>
+      </div> -->
+<div class="wrapper">
+ 
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-2">
+            <h1 class="mt-2">Property List</h1> 
+          </div>
+          <div class="col-sm-2"><a [routerLink]="['/home/property/add']" class="nav-link"><button type="button" class="btn property-btn">Add Property</button></a></div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Property List</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">All Types Of Propery List</h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <table class="table table-bordered">
+                  <thead>                  
+                    <tr>
+                      <th style="width: 10px">#</th>
+                      <th>Property Name</th>
+                      <th>Description</th>
+                      <th>Address</th>
+                      <th>Price</th>
+                      <th>Type</th>
+                      <th>Status</th>
+                      <!--<th>View</th> -->
+                      <th>Subdomain</th>
+                      <th>Edit</th>
+                      <th>Remove</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let property of PropertyList | paginate: { itemsPerPage: itemsPerPage, currentPage: p, totalItems: total} ; let i=index">
+                      <td>{{ property.index }}</td>
+                      <td>{{ property.name }}</td>
+                      <td>{{ property.description }}</td>
+                      <td>{{ property.address }}</td>
+                      <td>{{ property.price }}</td>
+                      <td>{{ property.type }}</td>
+                     
+                      <td *ngIf="property.status=='inactive'"><span class="badge bg-danger">In Active</span></td>
+                      <td *ngIf="property.status=='active'"><span class="badge bg-success">Active</span></td>
+                      <!-- <td><button type="button" class="btn property-btn" (click)="goTemplate(property)">View</button></td> 
+
+                      <td><a  type="link" class="btn property-btn" target="_BLANK"   href="http://{{ property.domain_name }}.{{ SITE_URL }}">View</a></td>-->
+                      <td>
+                        <!-- <a type="link"  target="_BLANK" (click)="goPreview(property)">{{ property.domain_name }}</a> -->
+                        <a target="_blank" [routerLink]="['/preview']" >
+                          <button type="button" class="btn property-btn" (click)="goPreview(property)" >Preview</button>
+                        </a></td>
+                      <td> <button type="button" class="btn property-btn" (click)="goEdit(property)" >Edit</button></td>
+                      <td><button type="button" class="btn property-btn" (click)="goDelete(property)">Delete</button> </td> 
+                    </tr>
+                   
+                  </tbody>
+                </table>
+              </div>
+              <div> <pagination-controls (pageChange)="p = $event" style="float:right"></pagination-controls></div>
+               
+              
+
+              <!-- /.card-body -->
+              
+              <!-- <div class="card-footer clearfix">
+                <ul class="pagination pagination-sm m-0 float-right">
+                  <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
+                  <li class="page-item"><a class="page-link" href="#">1</a></li>
+                  <li class="page-item"><a class="page-link" href="#">2</a></li>
+                  <li class="page-item"><a class="page-link" href="#">3</a></li>
+                  <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
+                </ul>
+              </div> -->
+            </div>
+          </div>
+         
+        </div>
+       
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+ <app-footer></app-footer>
+  <!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
+
+<div class="modal fade" id="messageModelDelete">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title"></h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <h3> Are You Sure Want To Remove ???</h3>
+          <h4>{{ property_name }}</h4>
+        </div>
+        <div class="modal-footer justify-content-between">
+            <button type="button"  data-dismiss="modal" class="btn property-btn" (click)="deleteProperty()">Yes</button>
+          <button type="button"  data-dismiss="modal" class="btn property-btn">No</button>
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+
+
+  <div class="modal fade" id="messageModel">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title"></h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>{{ responseMessage }}</p>
+          </div>
+          <div class="modal-footer justify-content-between">
+            <button type="button"  data-dismiss="modal" class="btn property-btn">Close</button>
+          </div>
+        </div>
+        <!-- /.modal-content -->
+      </div>
+      <!-- /.modal-dialog -->
+    </div>
+</body>
+</html>

@@ -1,0 +1,44 @@
+.property-btn{
+  color: #fff;
+    background-color: #00c5a6;
+    border-color: #00c5a6;
+    box-shadow: none;
+    border-radius: unset;
+}
+.property-btn:hover {
+  color: #fff;
+    background-color: #00c5a6;
+    border-color: #00c5a6;
+    box-shadow: none;
+    border-radius: unset;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.tab-header-card{
+    background-color: #ffffff;
+    border-bottom: 2px solid #d6d7d8;
+}
+.font-25{
+    font-size: 25px;
+}
+.font-20{
+    font-size: 20px;
+}
+.ngx-file-drop__drop-zone{
+  height: 170px !important;
+  margin: auto !important;
+  border: 1px dashed #a6abad !important;
+  border-radius:0px !important;
+}
+.ngx-file-drop__content{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 170px !important;
+  color: #0782d0;
+}
+.text-gray{
+  color: #b3b3b3;
+}
+.pointer{
+  cursor: pointer;
+}
